@@ -6,22 +6,24 @@ import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.exercise.sightly.BlogSightly;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
- * This class file is used for defining the JSON utility functions. This class
- * has below methods convertObjectToString addKeyValuePairToJson
- * convertObjectToJavaObject convertJavaObjectToJsonObject
- * convertStringToJsonObjcet
+ * This class file is used for defining the JSON utility functions. 
  * 
  * @author rshiv2
  * 
  */
 public final class JsonUtil {
     private static ObjectMapper mapper = new ObjectMapper();
+    public static final Logger LOG = LoggerFactory.getLogger(BlogSightly.class);
+    
     static {
         mapper = mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
         mapper = mapper.enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL);
@@ -49,11 +51,16 @@ public final class JsonUtil {
                     jsonObj = convertStringToJsonObject(jsonString);
                 }
             } catch (IOException e) {
+            	LOG.error("IOException {}", e);
             }
         }
         return jsonObj;
     }
-
+    
+    /** This converts string to json object.
+     * @param input
+     * @return
+     */
     public static JSONObject convertStringToJsonObject(String input) {
         JSONObject jsonObj = null;
         try {
@@ -62,6 +69,7 @@ public final class JsonUtil {
             jsonObj = (JSONObject) parser.parse(input);
 
         } catch (ParseException e) {
+        	LOG.error("ParseException {}", e);
         }
         return jsonObj;
     }
@@ -72,7 +80,7 @@ public final class JsonUtil {
             try {
                 obj = mapper.readValue(json, clazz);
             } catch (IOException e) {
-                //
+            	LOG.error("IOException {}", e);
             }
         }
 

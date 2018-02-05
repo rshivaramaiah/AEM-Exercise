@@ -1,17 +1,36 @@
+<style type='text/css'>
+  .child-ul li,
+  .parent-ul li{
+     list-style-type: none;
+     margin-left:16px;
+     padding:10px 0;
+     }
+
+
+</style>
 
 
 <div data-sly-use.blogComments="${'com.exercise.sightly.BlogSightly'}" data-sly-unwrap></div>
-<sly data-sly-text="${properties.headLine}"> </sly></br>
-<p data-sly-text="${properties.text }"></p></br></br>
--------------------------</br>
-<ul data-sly-list="${blogComments.comments.commentsList}" data-sly-unwrap> 
+<sly data-sly-text="${properties.headLine}"> </sly>
+<p data-sly-text="${properties.text }"></p>
 
-<li>comment id: ${item.commentId}</li> </br>
-<li>comment: ${item.comment}</li></br>
-<li>comment by: ${item.commenterName}</li></br></br></br>
+
+<div class='parent-ul' data-sly-list.blog="${blogComments.blogs.blogsList}" data-sly-unwrap> 
+<ul class='parent-ul'>
+<li>BLOG NAME: <strong>${blog.blogName}</strong> -ID: ${blog.blogId}</li>
+
+<li>BLOG DESCRIPTION: ${blog.blogDescription}</li>
+	<div  data-sly-list="${blog.commentsList}" data-sly-unwrap> 
+    <ul class='child-ul'>
+
+		<li>COMMENT:${item.commentId} : ${item.comment}</li>
+		<li>COMMENT BY: <i>${item.commenterName}</i></li>
+
+    </ul>
+    </div>
 </ul>
---------------------------
-</br></br></br></br></br>
+</div>
+
 
 
 

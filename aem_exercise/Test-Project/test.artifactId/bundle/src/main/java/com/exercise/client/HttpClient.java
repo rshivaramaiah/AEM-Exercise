@@ -14,20 +14,30 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
+import org.apache.http.client.methods.HttpGet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.exercise.constants.Constants;
 import com.exercise.util.JsonUtil;
-
-/*This is the client class 
- * 
+/**This class is used to hit the third party over http get the response and send it in json format,  
+ * @author rshiv2
+ *
  */
 @Component(immediate = true, name = "http Service")
 @Service(HttpClient.class)
 public class HttpClient {
 
+	public static final Logger LOG = LoggerFactory.getLogger(HttpClient.class);
+	
+	/** This http get method,
+	 * @param url url
+	 * @return JSON object
+	 */
 	public static JSONObject executeGet(String url) {
 		String responseBody = null;
 		JSONObject jsonResponseObject = null;
@@ -35,7 +45,7 @@ public class HttpClient {
 			URL endPointUrl = new URL(url);
 			HttpURLConnection conn = (HttpURLConnection) endPointUrl.openConnection();
 
-			conn.setRequestMethod("GET");
+			conn.setRequestMethod(HttpGet.METHOD_NAME);
 
 			InputStream is = conn.getInputStream();
 
@@ -46,16 +56,18 @@ public class HttpClient {
 			conn.disconnect();
 
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("MalformedURLException {}", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("IOException {}", e);
 		}
 
 		return jsonResponseObject;
 	}
 
+	/** Convert the response string to json format
+	 * @param responseBody
+	 * @return
+	 */
 	private static JSONObject getJsonResponse(String responseBody) {
 		JSONArray jsonArrayResponse = null;
 		JSONObject jsonResponseObject = null;
@@ -68,18 +80,16 @@ public class HttpClient {
 
 				} else {
 					jsonArrayResponse = (JSONArray) obj;
-					Map<String, JSONArray> items = new HashMap<String, JSONArray>();
-					items.put("items", jsonArrayResponse);
+					Map<String, JSONArray> items = new HashMap<>();
+					items.put(Constants.ITEMS, jsonArrayResponse);
 					jsonResponseObject = JsonUtil.convertJavaObjectToJsonObject(items);
 				}
 
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error("JSON parse exception {}", e);
 			}
 
 		}
-		// TODO Auto-generated method stub
 		return jsonResponseObject;
 	}
 }
