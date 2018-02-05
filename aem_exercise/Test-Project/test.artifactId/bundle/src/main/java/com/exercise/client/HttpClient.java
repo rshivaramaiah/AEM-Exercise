@@ -24,7 +24,11 @@ import org.slf4j.LoggerFactory;
 
 import com.exercise.constants.Constants;
 import com.exercise.util.JsonUtil;
-/**This class is used to hit the third party over http get the response and send it in json format,  
+
+/**
+ * This class is used to hit the third party over http get the response and send
+ * it in json format,
+ * 
  * @author rshiv2
  *
  */
@@ -33,9 +37,12 @@ import com.exercise.util.JsonUtil;
 public class HttpClient {
 
 	public static final Logger LOG = LoggerFactory.getLogger(HttpClient.class);
-	
-	/** This http get method,
-	 * @param url url
+
+	/**
+	 * This http get method,
+	 * 
+	 * @param url
+	 *            url
 	 * @return JSON object
 	 */
 	public static JSONObject executeGet(String url) {
@@ -44,15 +51,18 @@ public class HttpClient {
 		try {
 			URL endPointUrl = new URL(url);
 			HttpURLConnection conn = (HttpURLConnection) endPointUrl.openConnection();
-
 			conn.setRequestMethod(HttpGet.METHOD_NAME);
-
-			InputStream is = conn.getInputStream();
-
+			InputStream inputStream = conn.getInputStream();
+			
+			//convert the input stream to json format
+			if(null!= inputStream){
 			StringWriter writer = new StringWriter();
-			IOUtils.copy(is, writer, StandardCharsets.UTF_8);
+			IOUtils.copy(inputStream, writer, StandardCharsets.UTF_8);
 			responseBody = writer.toString();
 			jsonResponseObject = getJsonResponse(responseBody);
+			}
+			
+			//Close the http connection
 			conn.disconnect();
 
 		} catch (MalformedURLException e) {
@@ -64,7 +74,9 @@ public class HttpClient {
 		return jsonResponseObject;
 	}
 
-	/** Convert the response string to json format
+	/**
+	 * Convert the response string to json format
+	 * 
 	 * @param responseBody
 	 * @return
 	 */
