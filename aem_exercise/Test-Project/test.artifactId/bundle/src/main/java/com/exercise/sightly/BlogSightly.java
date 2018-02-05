@@ -49,8 +49,9 @@ public class BlogSightly extends WCMUsePojo {
 	public void setBlogs(BlogResponseVO blogs) {
 		this.blogs = blogs;
 	}
-	
-	/**This is the activate method, it fetches blogs with comment on activation.
+
+	/**
+	 * This is the activate method, it fetches blogs with comment on activation.
 	 */
 	@Override
 	public void activate() throws Exception {
