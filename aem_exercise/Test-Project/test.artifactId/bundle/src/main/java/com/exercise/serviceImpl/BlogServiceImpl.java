@@ -21,7 +21,7 @@ public class BlogServiceImpl implements BlogService{
 	
 	@Override
 	public CommentResponseVO getComments(){
-		JSONObject responseJson = httpClient.executeGet("http://localhost:8090/MockServices/mock/comments");
+		JSONObject responseJson = httpClient.executeGet("http://localhost:8091/MockServices/mock/comments");
 		return helper.sortComments(responseJson);
 	}
 
