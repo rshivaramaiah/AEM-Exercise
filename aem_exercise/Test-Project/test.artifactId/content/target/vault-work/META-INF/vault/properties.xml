@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>artifactName Package</comment>
+<entry key="createdBy">rshiv2</entry>
+<entry key="name">test.artifactId-content</entry>
+<entry key="created">2018-01-31T00:00:36.253+0530</entry>
+<entry key="groupId">test.groupid</entry>
+<entry key="version">1.0-SNAPSHOT</entry>
+<entry key="requiresRoot">false</entry>
+<entry key="group">PackageGroup</entry>
+<entry key="description">Maven Multimodule project for artifactName.</entry>
+<entry key="artifactId">test.artifactId-content</entry>
+<entry key="path">/etc/packages/PackageGroup/test.artifactId-content.zip</entry>
+</properties>

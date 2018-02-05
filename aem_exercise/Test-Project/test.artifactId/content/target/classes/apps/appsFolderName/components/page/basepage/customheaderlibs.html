@@ -1,0 +1,19 @@
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=yes" />
+<meta http-equiv="cleartype" content="on" />
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  
+
+
+<sly data-sly-use.listReader="${'com.alcs.utilities.ListReaderHelperUtility'}">
+	<sly data-sly-list.sectionMap=${listReader.analyticsValue}>
+		<meta content = "${listReader.analyticsValue[sectionMap]}" name="${sectionMap}"/>
+    </sly>
+</sly>
+
+<sly data-sly-include="analytics.html" />
+<sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}" data-sly-unwrap>
+<div data-sly-use.listReaderUtility="${'com.alcs.utilities.ListReaderHelperUtility' @title='theme-clientlibs'}" data-sly-unwrap>
+<meta data-sly-call="${clientLib.all @ categories='clientlibs.common'}" data-sly-unwrap></meta>
+<meta sly data-sly-call="${clientLib.all @ categories=listReaderUtility.value}" data-sly-unwrap></meta>
+</sly>

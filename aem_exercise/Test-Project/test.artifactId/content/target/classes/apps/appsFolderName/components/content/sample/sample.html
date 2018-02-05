@@ -1,0 +1,18 @@
+
+
+<div data-sly-use.blogComments="${'com.test.sightly.SampleSightly'}" data-sly-unwrap></div>
+<sly data-sly-text="${properties.headLine}"> </sly></br>
+<p data-sly-text="${properties.text }"></p></br></br>
+-------------------------</br>
+<ul data-sly-list="${blogComments.comments.commentsList}" data-sly-unwrap> 
+
+<li>comment id: ${item.commentId}</li> </br>
+<li>comment: ${item.comment}</li></br>
+<li>comment by: ${item.commenterName}</li></br></br></br>
+</ul>
+--------------------------
+</br></br></br></br></br>
+
+
+
+
