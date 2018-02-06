@@ -9,9 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.exercise.client.HttpClient;
 import com.exercise.service.BlogService;
-import com.exercise.sightly.BlogSightly;
+import com.exercise.vo.BlogResponseVO;
 import com.exercise.vo.CommentResponseVO;
 import com.test.MockWCMUseBase;
 
@@ -34,6 +33,8 @@ public class BlogSightlyTest extends MockWCMUseBase {
 	private BlogService blogService;
 	@Mocked
 	CommentResponseVO comments;
+	@Mocked
+	BlogResponseVO blogs;
 
 	private BlogSightly sampleSightly;
 
@@ -81,6 +82,8 @@ public class BlogSightlyTest extends MockWCMUseBase {
 				returns(blogService);
 				blogService.getComments();
 				returns(comments);
+				blogService.getBlogs();
+                returns(blogs);
 			}
 		};
 		sampleSightly.activate();

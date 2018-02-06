@@ -59,8 +59,6 @@ public class BlogSightly extends WCMUsePojo {
 		BlogService blogService = getSlingScriptHelper().getService(BlogService.class);
 		comments = blogService.getComments();
 		blogs = blogService.getBlogs();
-		LOG.debug("Activation completed");
-
 	}
 
 }

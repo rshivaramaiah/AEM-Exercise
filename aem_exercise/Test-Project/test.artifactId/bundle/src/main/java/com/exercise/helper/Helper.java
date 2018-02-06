@@ -24,56 +24,73 @@ import com.exercise.vo.CommentResponseVO;
 @Service(Helper.class)
 public class Helper {
 
-	/**
-	 * This method sorts the comments by comment description
-	 * 
-	 * @param response
-	 * @return
-	 */
-	public CommentResponseVO sortComments(JSONObject response) {
-		CommentResponseVO commentresponse = (CommentResponseVO) JsonUtil.convertJsonToJavaObject(response.toString(),
+    /**
+     * This method sorts the comments by comment description
+     * 
+     * @param response
+     * @return sorted commets
+     */
+    public CommentResponseVO sortComments(JSONObject response) {
+        CommentResponseVO commentresponse = (CommentResponseVO) JsonUtil.convertJsonToJavaObject(response.toString(),
+                CommentResponseVO.class);
+        Collections.sort(commentresponse.getCommentsList(),
+                (firstComment, secondComment) -> firstComment.getComment().compareTo(secondComment.getComment()));
+        return commentresponse;
+    }
 
-				CommentResponseVO.class);
-		Collections.sort(commentresponse.getCommentsList(),
-				(firstComment, secondComment) -> firstComment.getComment().compareTo(secondComment.getComment()));
-		return commentresponse;
-	}
+    /**
+     * This methods populates the comment details for each blogs.
+     * 
+     * @param blogsJson
+     *            complete blog response
+     * @param commentsJson
+     *            complete comment response
+     * @return updated blog response
+     */
+    public BlogResponseVO getBlogs(JSONObject blogsJson, JSONObject commentsJson) {
+        BlogResponseVO blogsresponse = (BlogResponseVO) JsonUtil.convertJsonToJavaObject(blogsJson.toString(),
+                BlogResponseVO.class);
 
-	/**
-	 * This methods populates the comment details for each blogs.
-	 * 
-	 * @param blogsJson
-	 * @param commentsJson
-	 * @return
-	 */
-	public BlogResponseVO getBlogs(JSONObject blogsJson, JSONObject commentsJson) {
-		BlogResponseVO blogsresponse = (BlogResponseVO) JsonUtil.convertJsonToJavaObject(blogsJson.toString(),
-				BlogResponseVO.class);
-		CommentResponseVO commentresponse = (CommentResponseVO) JsonUtil
-				.convertJsonToJavaObject(commentsJson.toString(), CommentResponseVO.class);
+        List<BlogDetailsVO> blogs = blogsresponse.getBlogsList();
+        // populating comment details for each blog
+        if (null != blogs && !blogs.isEmpty()) {
 
-		List<BlogDetailsVO> blogs = blogsresponse.getBlogsList();
-		// populating comment details for each blog
-		if (null != blogs && !blogs.isEmpty()) {
-			blogs.forEach(blog -> {
-				List<CommentDetailsVO> commentDetailsList = new ArrayList<>();
-				List<String> commentIdList = blog.getComments();
-				// for each comment id in the blog fetch comment details and
-				// populate comment details
-				commentIdList.forEach(commentId -> {
-					CommentDetailsVO commentDetail = commentresponse.getCommentsList().stream()
-							.filter(comment -> commentId.equals(comment.getCommentId())).findAny().orElse(null);
-					commentDetailsList.add(commentDetail);
+            blogs.forEach(blog -> {
+                List<String> commentIdList = blog.getComments();
+                if (null != commentIdList && !commentIdList.isEmpty()) {
+                    List<CommentDetailsVO> commentDetailsList = new ArrayList<>();
 
-				});
+                    // Add each comment details in blog
+                    commentIdList.forEach(commentId -> {
+                        commentDetailsList.add(getCommentDetail(commentsJson, commentId));
+                    });
 
-				blog.setCommentsList(commentDetailsList);
+                    blog.setCommentsList(commentDetailsList);
+                }
+            });
+        }
+        // sort the blog by blog Description
+        Collections.sort(blogsresponse.getBlogsList(),
+                (firstBlog, secondBlog) -> firstBlog.getBlogName().compareTo(secondBlog.getBlogName()));
+        return blogsresponse;
+    }
 
-			});
-		}
-		// sort the blog by blog Description
-		Collections.sort(blogsresponse.getBlogsList(),
-				(firstBlog, secondBlog) -> firstBlog.getBlogName().compareTo(secondBlog.getBlogName()));
-		return blogsresponse;
-	}
+    /**
+     * This method fetches comment details for given comment id from comment
+     * response and returns it.
+     * 
+     * @param commentsJson
+     *            complete comment response.
+     * @param commentId
+     *            comment id for which comment details needs to be fetched.
+     * @return comment detail
+     */
+    private CommentDetailsVO getCommentDetail(JSONObject commentsJson, String commentId) {
+        CommentResponseVO commentresponse = (CommentResponseVO) JsonUtil
+                .convertJsonToJavaObject(commentsJson.toString(), CommentResponseVO.class);
+
+        return commentresponse.getCommentsList().stream().filter(comment -> commentId.equals(comment.getCommentId()))
+                .findAny().orElse(null);
+
+    }
 }

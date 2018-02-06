@@ -48,9 +48,10 @@ public class HttpClient {
 	public static JSONObject executeGet(String url) {
 		String responseBody = null;
 		JSONObject jsonResponseObject = null;
+		HttpURLConnection conn = null;
 		try {
 			URL endPointUrl = new URL(url);
-			HttpURLConnection conn = (HttpURLConnection) endPointUrl.openConnection();
+			conn = (HttpURLConnection) endPointUrl.openConnection();
 			conn.setRequestMethod(HttpGet.METHOD_NAME);
 			InputStream inputStream = conn.getInputStream();
 
@@ -62,13 +63,16 @@ public class HttpClient {
 				jsonResponseObject = getJsonResponse(responseBody);
 			}
 
-			// Close the http connection
-			conn.disconnect();
-
 		} catch (MalformedURLException e) {
 			LOG.error("MalformedURLException {}", e);
 		} catch (IOException e) {
 			LOG.error("IOException {}", e);
+		} finally {
+			if (null != conn) {
+				// Close the http connection
+				conn.disconnect();
+			}
+
 		}
 
 		return jsonResponseObject;
