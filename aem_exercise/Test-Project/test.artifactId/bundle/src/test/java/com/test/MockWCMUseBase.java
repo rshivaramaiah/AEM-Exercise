@@ -18,97 +18,96 @@ import mockit.Mocked;
 
 public abstract class MockWCMUseBase {
 
-    @Mocked
-    protected ValueMap map;
+	@Mocked
+	protected ValueMap map;
 
-    @Mocked
-    protected Resource resource;
+	@Mocked
+	protected Resource resource;
 
-    @Mocked
-    protected PageManager pageManager;
+	@Mocked
+	protected PageManager pageManager;
 
-    @Mocked
-    protected SlingScriptHelper slingScriptHelper;
+	@Mocked
+	protected SlingScriptHelper slingScriptHelper;
 
-    @Mocked
-    protected Page page;
+	@Mocked
+	protected Page page;
 
-    @Mocked
-    protected ResourceResolver resourceResolver;
+	@Mocked
+	protected ResourceResolver resourceResolver;
 
-    @Mocked
-    protected SlingHttpServletRequest request;
+	@Mocked
+	protected SlingHttpServletRequest request;
 
-    @Mocked
-    protected ValueMap pageProperties;
+	@Mocked
+	protected ValueMap pageProperties;
 
-    @Mocked
-    protected SlingHttpServletResponse response;
+	@Mocked
+	protected SlingHttpServletResponse response;
 
-    @Mocked
-    protected SightlyWCMMode wcmmode;
+	@Mocked
+	protected SightlyWCMMode wcmmode;
 
-    protected void init() {
-        new MockUp<WCMUsePojo>() {
-            @Mock
-            public ValueMap getProperties() {
-                return map;
-            }
+	protected void init() {
+		new MockUp<WCMUsePojo>() {
+			@Mock
+			public ValueMap getProperties() {
+				return map;
+			}
 
-            @Mock
-            public Resource getResource() {
-                return resource;
-            }
+			@Mock
+			public Resource getResource() {
+				return resource;
+			}
 
-            @Mock
-            public PageManager getPageManager() {
-                return pageManager;
-            }
+			@Mock
+			public PageManager getPageManager() {
+				return pageManager;
+			}
 
-            @Mock
-            public SlingScriptHelper getSlingScriptHelper() {
-                return slingScriptHelper;
-            }
+			@Mock
+			public SlingScriptHelper getSlingScriptHelper() {
+				return slingScriptHelper;
+			}
 
-            @Mock
-            public Page getCurrentPage() {
-                return page;
-            }
+			@Mock
+			public Page getCurrentPage() {
+				return page;
+			}
 
-            @Mock
-            ResourceResolver getResourceResolver() {
+			@Mock
+			ResourceResolver getResourceResolver() {
 
-                return resourceResolver;
-            }
+				return resourceResolver;
+			}
 
-            @Mock
-            SlingHttpServletRequest getRequest() {
+			@Mock
+			SlingHttpServletRequest getRequest() {
 
-                return request;
-            }
+				return request;
+			}
 
-            @Mock
-            ValueMap getPageProperties() {
-                return pageProperties;
-            }
+			@Mock
+			ValueMap getPageProperties() {
+				return pageProperties;
+			}
 
-            @Mock
-            SlingHttpServletResponse getResponse() {
-                return response;
-            }
+			@Mock
+			SlingHttpServletResponse getResponse() {
+				return response;
+			}
 
-            @Mock
-            SightlyWCMMode getWcmMode() {
-                return wcmmode;
-            }
+			@Mock
+			SightlyWCMMode getWcmMode() {
+				return wcmmode;
+			}
 
-            @SuppressWarnings("unchecked")
-            @Mock
-            <T> T get(String s, Class<T> c) {
-                return (T) "string";
-            }
-           
+			@SuppressWarnings("unchecked")
+			@Mock
+			<T> T get(String s, Class<T> c) {
+				return (T) "string";
+			}
 
-        };
-    }
+		};
+	}
 }

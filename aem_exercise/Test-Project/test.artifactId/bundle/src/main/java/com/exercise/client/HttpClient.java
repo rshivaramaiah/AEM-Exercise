@@ -53,16 +53,16 @@ public class HttpClient {
 			HttpURLConnection conn = (HttpURLConnection) endPointUrl.openConnection();
 			conn.setRequestMethod(HttpGet.METHOD_NAME);
 			InputStream inputStream = conn.getInputStream();
-			
-			//convert the input stream to json format
-			if(null!= inputStream){
-			StringWriter writer = new StringWriter();
-			IOUtils.copy(inputStream, writer, StandardCharsets.UTF_8);
-			responseBody = writer.toString();
-			jsonResponseObject = getJsonResponse(responseBody);
+
+			// convert the input stream to json format
+			if (null != inputStream) {
+				StringWriter writer = new StringWriter();
+				IOUtils.copy(inputStream, writer, StandardCharsets.UTF_8);
+				responseBody = writer.toString();
+				jsonResponseObject = getJsonResponse(responseBody);
 			}
-			
-			//Close the http connection
+
+			// Close the http connection
 			conn.disconnect();
 
 		} catch (MalformedURLException e) {

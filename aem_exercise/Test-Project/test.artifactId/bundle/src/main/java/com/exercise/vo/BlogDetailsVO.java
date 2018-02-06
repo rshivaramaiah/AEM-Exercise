@@ -6,22 +6,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BlogDetailsVO {
-    @JsonProperty("blogId")
-    private String blogId;
-    
-    @JsonProperty("blogDescription")
-    private String blogDescription;
-    
-    @JsonProperty("blogName")
-    private String blogName;
-    
-    @JsonProperty("comments")
-    private List<String> comments;
-    
-    @JsonIgnore
-    private List<CommentDetailsVO> commentsList;
-    
-    public String getBlogId() {
+	@JsonProperty("blogId")
+	private String blogId;
+
+	@JsonProperty("blogDescription")
+	private String blogDescription;
+
+	@JsonProperty("blogName")
+	private String blogName;
+
+	@JsonProperty("comments")
+	private List<String> comments;
+
+	@JsonIgnore
+	private List<CommentDetailsVO> commentsList;
+
+	public String getBlogId() {
 		return blogId;
 	}
 
@@ -60,6 +60,5 @@ public class BlogDetailsVO {
 	public void setBlogName(String blogName) {
 		this.blogName = blogName;
 	}
-	
-	
+
 }

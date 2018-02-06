@@ -14,11 +14,12 @@ import com.exercise.service.BlogService;
 import com.exercise.vo.BlogResponseVO;
 import com.exercise.vo.CommentResponseVO;
 
-/**This is the implementation class for BlogService.
+/**
+ * This is the implementation class for BlogService.
+ * 
  * @author rshiv2
  *
  */
-
 
 @Component(immediate = true, name = "Blog Service")
 @Service(BlogService.class)
@@ -37,7 +38,7 @@ public class BlogServiceImpl implements BlogService {
 		JSONObject responseJson = httpClient.executeGet(Constants.URL_GET_COMMENTS);
 		return helper.sortComments(responseJson);
 	}
-	
+
 	/**
 	 * This method provides list of blogs with comments.
 	 */

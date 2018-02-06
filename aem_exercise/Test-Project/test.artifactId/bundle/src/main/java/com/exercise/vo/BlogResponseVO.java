@@ -5,7 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BlogResponseVO {
-	
+
 	@JsonProperty("blogsList")
 	private List<BlogDetailsVO> blogsList;
 
@@ -17,5 +17,4 @@ public class BlogResponseVO {
 		this.blogsList = blogsList;
 	}
 
-	
 }
